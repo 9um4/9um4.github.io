@@ -28,7 +28,7 @@
 <meta property="og:description" content="배경사용자가 Application을 실행하는 동안 전역적으로 관리해야 하는 Context들이 있습니다. 예로 들어 Player의 Main Party에 포함되어 있는 Character들에 대한 정보나 현재 Application의 State가 대표적인 예시가 될 수 있을 것 같습니다. Unity 내에서는 일반적으로 GameManager라는 Class를 구현하고">
 <meta property="og:locale" content="ko_KR">
 <meta property="article:published_time" content="2025-08-20T16:04:29.457Z">
-<meta property="article:modified_time" content="2025-08-20T16:48:07.827Z">
+<meta property="article:modified_time" content="2025-08-21T17:10:47.920Z">
 <meta property="article:author" content="9um4">
 <meta name="twitter:card" content="summary">
   
@@ -189,7 +189,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-             words 
+            4k words 
           </div>
         </div>
         
@@ -198,9 +198,10 @@
         
           <h1 id="배경"><a href="#배경" class="headerlink" title="배경"></a>배경</h1><p>사용자가 Application을 실행하는 동안 전역적으로 관리해야 하는 Context들이 있습니다. 예로 들어 Player의 Main Party에 포함되어 있는 Character들에 대한 정보나 현재 Application의 State가 대표적인 예시가 될 수 있을 것 같습니다.</p>
 <p>Unity 내에서는 일반적으로 <code>GameManager</code>라는 Class를 구현하고, 해당 Class에 Context를 Attribute의 형태로 담거나, 혹은 GameManger가 관리하는 하위 Class들에 해당 Context들을 나누어 관리함으로서 해결합니다. 하지만 <code>GameManager</code>를 일반적인 Component를 구현하는 것 처럼 구현할 경우 몇 가지 문제를 유발할 수 있습니다.</p>
-<pre><code>1.  `GameManager`로부터 유래한 Instance가 2개 이상일 경우 각각의 Instance들은 각자의 Context를 가질 수 있다는 문제가 발생합니다. 
-2. 설계할 때 `GameManager`는 Unity의 MonoBehaviour를 상속하기 때문에 `GameManager`가 생성되고 유지할 수 있는 환경을 만들어 주는 것이 필요합니다.
-</code></pre>
+<ol>
+<li><code>GameManager</code>로부터 유래한 Instance가 2개 이상일 경우 각각의 Instance들은 각자의 Context를 가질 수 있다는 문제가 발생합니다. </li>
+<li>설계할 때 <code>GameManager</code>는 Unity의 MonoBehaviour를 상속하기 때문에 <code>GameManager</code>가 생성되고 유지할 수 있는 환경을 만들어 주는 것이 필요합니다.</li>
+</ol>
 <p>이런 문제들을 해결하기 위해 Application의 Life Cycle 동안 단 하나만 존재하고 파괴되지 않는 특별한 환경을 GameManager, 필요한 경우 다른 Manager Instance들에게 제공하는 구조를 설계하려고 합니다.</p>
 <h1 id="구현"><a href="#구현" class="headerlink" title="구현"></a>구현</h1><h2 id="Singleton-Pattern을-통한-유일성-보장"><a href="#Singleton-Pattern을-통한-유일성-보장" class="headerlink" title="Singleton Pattern을 통한 유일성 보장"></a>Singleton Pattern을 통한 유일성 보장</h2><p>앞서 언급한 바와 같이 GameManager로부터 유래한 Instance가 2개 이상일 경우 각각의 Instance들은 각자의 Context를 가질 수 있습니다.</p>
 <ul>
